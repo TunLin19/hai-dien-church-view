@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function NotFound() {
   const path = window.location.pathname
   return (

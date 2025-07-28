@@ -1,6 +1,4 @@
-import React from 'react'
-
-const AdminLayout = ({ children }) => {
+const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
       
