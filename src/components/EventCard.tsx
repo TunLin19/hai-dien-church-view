@@ -1,11 +1,13 @@
-function EventCard({ event }: { event: any }) {
+import type { Event } from "@/pages/Events";
+
+function EventCard({ event }: { event: Event }) {
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+    <div className="border-content rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
       {event.image && (
         <img
           src={event.image}
           alt={event.title}
-          className="w-full h-48 object-cover"
+          className="w-full h-60 md:h-48 object-fill rounded-lg"
         />
       )}
 
@@ -24,12 +26,8 @@ function EventCard({ event }: { event: any }) {
             {event.date}
           </p>
           <p className="flex items-center">
-            <span className="w-20 font-medium">Địa điểm:</span>
-            {event.location}
-          </p>
-          <p className="flex items-center">
             <span className="w-20 font-medium">Tổ chức:</span>
-            {event.organizer}
+            {event.institute}
           </p>
         </div>
 

@@ -3,6 +3,7 @@ import UserRoutes from './routes/UserRoutes'
 import AdminRoutes from './routes/AdminRoutes'
 import Login from './pages/Login'
 import SignUp from './pages/Signup'
+import Otp from './pages/Otp'
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/admin/*" element={<AdminRoutes />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/otp" element={<Otp />} />
         </Routes>
       </div>
     </Router>

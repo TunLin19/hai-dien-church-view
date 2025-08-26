@@ -24,12 +24,16 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { loginFormSchema } from '@/lib/validation-schemas'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { PasswordInput } from '@/components/ui/password-input'
+import { sentOtpLogin } from '@/api/authService'
+import { useState } from 'react'
 
 const formSchema = loginFormSchema
 
 export default function LoginPreview() {
+  const [isLoading, setIsLoading] = useState(false);
+  const navigator = useNavigate();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -40,9 +44,18 @@ export default function LoginPreview() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      console.log(values)
+      setIsLoading(true);
+      const response = await sentOtpLogin(values);
+      console.log(response)
+      if (response.data.code === 200) {
+        console.log('Login successful:', response.data);
+        // Navigate to the OTP page with the email as state
+        navigator('/otp', { state: { email: values.email } });
+      }
     } catch (error) {
       console.error('Lỗi gửi form', error)
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -105,15 +118,26 @@ export default function LoginPreview() {
                     </FormItem>
                   )}
                 />
-                <Button
-                  type="submit"
-                  className="w-full bg-cyan-800 hover:bg-cyan-700 text-white font-semibold shadow"
-                >
-                  Đăng nhập
-                </Button>
+                {isLoading ? (
+                  <Button
+                    type="submit"
+                    className="w-full bg-cyan-800 hover:bg-cyan-700 text-white font-semibold shadow"
+                    disabled
+                  >
+                    Đang xử lý...
+                  </Button>
+                ) : (
+                  <Button
+                    type="submit"
+                    className="w-full bg-cyan-800 hover:bg-cyan-700 text-white font-semibold shadow"
+                  >
+                    Đăng nhập
+                  </Button>
+                )}
                 <Button
                   variant="outline"
                   className="w-full flex items-center gap-2 border-gray-300 hover:bg-gray-50"
+                  // onClick={() => signInWithGoogle()}
                 >
                   <Icon icon="flat-color-icons:google" width={22} />
                   Đăng nhập với Google

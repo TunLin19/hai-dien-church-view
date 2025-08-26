@@ -73,8 +73,8 @@ function Footer() {
               <div>
                 <h4 className="font-medium mb-2">Chúa nhật</h4>
                 <ul>
-                  <li>Sáng: 5:00 - 7:00</li>
-                  <li>Chiều: 16:30 - 18:30</li>
+                  <li>Sáng: 5:00</li>
+                  <li>Chiều: 16:30</li>
                 </ul>
               </div>
             </div>

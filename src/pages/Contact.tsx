@@ -1,10 +1,41 @@
+'use client'
+import { Button } from '@/components/ui/button'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { contactFormSchema } from '@/lib/validation-schemas'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+const formSchema = contactFormSchema
 function Contact() {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      phone: '',
+      message: '',
+    },
+  })
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      console.log(values)
+    } catch (error) {
+      console.error('Form submission error', error)
+    }
+  }
+
   return (
     <div className="container mx-auto py-10 px-4">
-      <h1 className="text-3xl font-bold text-holy-blue mb-4 text-center">
-        Liên hệ với Giáo xứ Hải Điền
-      </h1>
-      <div className="w-16 h-1 bg-holy-gold mx-auto mb-8 rounded"></div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="w-full h-[500px] rounded-lg overflow-hidden shadow-lg">
           <iframe
@@ -20,45 +51,109 @@ function Contact() {
           />
         </div>
         {/* Form liên hệ (nếu muốn) */}
-      <div className="max-w-xl mx-auto bg-white p-4 border-t rounded-lg shadow-lg">
-        <h2 className="text-xl font-medium mb-4 text-center">
-          Gửi lời nhắn
-        </h2>
-        <form className="space-y-4">
-          <input
-            type="text"
-            placeholder="Họ và tên"
-            className="w-full border rounded px-3 py-2"
-            required
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            className="w-full border rounded px-3 py-2"
-            required
-          />
-          <input
-            type="text"
-            placeholder="Số điện thoại"
-            className="w-full border rounded px-3 py-2"
-            required
-          />
-          <textarea
-            placeholder="Nội dung"
-            className="w-full border rounded px-3 py-2"
-            rows={4}
-            required
-          />
-          <button
-            type="submit"
-            className="bg-holy-blue hover:bg-holy-gold text-white font-semibold px-6 py-2 rounded transition"
-          >
-            Gửi
-          </button>
-        </form>
+        <div className="max-w-xl mx-auto bg-white p-4 border-t rounded-lg shadow-lg w-full">
+          <h2 className="text-xl font-medium mb-4 text-center">Gửi lời nhắn</h2>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-4 max-w-3xl mx-auto"
+            >
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel></FormLabel>
+                    <FormControl>
+                      <Input placeholder="Họ và tên" type="text" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel></FormLabel>
+                    <FormControl>
+                      <Input placeholder="Email" type="email" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="phone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel></FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Số điện thoại"
+                        type="text"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="message"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel></FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Nội dung"
+                        className="resize-none"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button className="flex ml-auto bg-cyan-800" type="submit">
+                Gửi đi
+              </Button>
+            </form>
+          </Form>
+        </div>
       </div>
-      </div>
-      
+
+      {/* Contact Section */}
+      <section className="mt-12">
+        <div className="rounded-lg bg-gray-100 p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h3 className="text-xl font-medium mb-3">Thông tin liên lạc</h3>
+              <ul className="space-y-2 text-gray-600">
+                <li>Địa chỉ: 123 Đường ABC, Xã Hải Điền</li>
+                <li>Điện thoại: (84) 234 567 890</li>
+                <li>Email: giaoxuhaidien@gmail.com</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-xl font-medium mb-3">
+                Giờ làm việc văn phòng
+              </h3>
+              <ul className="space-y-2 text-gray-600">
+                <li>Thứ 2 - Thứ 6: 8:00 - 17:00</li>
+                <li>Thứ 7: 8:00 - 12:00</li>
+                <li>Chúa Nhật: Đóng cửa</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   )
 }
