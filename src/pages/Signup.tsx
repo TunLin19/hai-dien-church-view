@@ -22,12 +22,16 @@ import {
 } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { registerFormSchema } from '@/lib/validation-schemas'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { PasswordInput } from '@/components/ui/password-input'
+import { useState } from 'react'
+import { sentOtpRegister } from '@/api/authService'
 
 const formSchema = registerFormSchema
 
 export default function SignUp() {
+  const [isLoading, setIsLoading] = useState(false);
+  const navigator = useNavigate();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -39,12 +43,21 @@ export default function SignUp() {
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    try {
-      console.log(values)
-    } catch (error) {
-      console.error('Lỗi gửi biểu mẫu', error)
+      try {
+        setIsLoading(true);
+        const response = await sentOtpRegister(values);
+        console.log(response)
+        if (response.data.code === 200) {
+          console.log('Register successful:', response.data);
+          // Navigate to the OTP page with the email as state
+          navigator('/otp', { state: { email: values.email, type: 'register', name: values.name, password: values.password } });
+        }
+      } catch (error) {
+        console.error('Lỗi gửi form', error)
+      } finally {
+        setIsLoading(false);
+      }
     }
-  }
 
   return (
     <div className="flex flex-col min-h-[50vh] h-full w-full items-center justify-center py-4 px-4 bg-gradient-to-br from-blue-50 to-indigo-100">
@@ -137,12 +150,22 @@ export default function SignUp() {
                   )}
                 />
 
-                <Button
-                  type="submit"
-                  className="w-full bg-cyan-800 hover:bg-cyan-700 text-white font-semibold shadow"
-                >
-                  Đăng ký
-                </Button>
+                {isLoading ? (
+                  <Button
+                    type="submit"
+                    className="w-full bg-cyan-800 hover:bg-cyan-700 text-white font-semibold shadow"
+                    disabled
+                  >
+                    Đang xử lý...
+                  </Button>
+                ) : (
+                  <Button
+                    type="submit"
+                    className="w-full bg-cyan-800 hover:bg-cyan-700 text-white font-semibold shadow"
+                  >
+                    Đăng ký
+                  </Button>
+                )}
               </div>
             </form>
           </Form>

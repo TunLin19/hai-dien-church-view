@@ -45,7 +45,7 @@ export default function HeroSection() {
       className="relative w-full max-w-5xl mx-auto rounded-xl overflow-hidden shadow-lg mt-2"
     >
       {/* Ảnh và overlay */}
-      <div className="relative h-[450px] transition-all duration-700">
+      <div className="relative h-[350px] md:h-[450px] transition-all duration-700">
         {bannerImages.map((item, idx) => (
           <img
             key={item.id}

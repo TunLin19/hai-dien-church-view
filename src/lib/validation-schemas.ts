@@ -31,8 +31,10 @@ export const registerFormSchema = z
     }
   })
 export const authenticationSchema = z.object({
-  email: z.string().email({ message: 'Email không hợp lệ' }),
-  otp: z.string().min(6).max(6),
+  email: z.string().email(),
+  otp: z.string().min(6, { message: 'Mã OTP phải có 6 ký tự' }),
+  fullName: z.string(),
+  password: z.string(),
 })
 export const contactFormSchema = z.object({
   name: z

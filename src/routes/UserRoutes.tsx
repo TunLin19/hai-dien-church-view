@@ -5,6 +5,7 @@ import Events from '../pages/Events'
 import Home from '../pages/Home'
 import NotFound from '../error/NotFound'
 import  Contact from '../pages/Contact'
+import Post from '../pages/Post'
 
 export default function UserRoutes() {
   return (
@@ -14,6 +15,7 @@ export default function UserRoutes() {
         <Route path="/about" element={<About />} />
         <Route path="/events" element={<Events />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/posts" element={<Post />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </UserLayout>

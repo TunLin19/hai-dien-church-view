@@ -50,7 +50,7 @@ export default function LoginPreview() {
       if (response.data.code === 200) {
         console.log('Login successful:', response.data);
         // Navigate to the OTP page with the email as state
-        navigator('/otp', { state: { email: values.email } });
+        navigator('/otp', { state: { email: values.email, type: 'login' } });
       }
     } catch (error) {
       console.error('Lỗi gửi form', error)

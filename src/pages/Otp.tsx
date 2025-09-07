@@ -1,6 +1,6 @@
 'use client'
 
-import { login } from '@/api/authService'
+import { login, register } from '@/api/authService'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -35,26 +35,52 @@ const formSchema = authenticationSchema
 export default function Otp() {
   const [isLoading, setIsLoading] = useState(false)
   const location = useLocation()
-  const email = location.state?.email || ''
+  const type = location.state?.type || null
   const navigator = useNavigate()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: email,
+      email: location.state?.email || '',
       otp: '',
+      fullName: location.state?.name || '',
+      password: location.state?.password || '',
     },
   })
+  if (!type || (type !== 'login' && type !== 'register')) {
+  return (
+    <div className="flex flex-col min-h-[50vh] h-full w-full items-center justify-center py-4 px-4 bg-gradient-to-br from-blue-50 to-indigo-100">
+      <Card className="mx-auto max-w-xl md:w-1/3 shadow-lg border-0">
+        <CardHeader>
+          <CardTitle className="text-3xl font-bold mb-2 text-cyan-800">
+            Lỗi
+          </CardTitle>
+          <CardDescription>
+            Đã có lỗi xảy ra. Vui lòng quay lại trang trước đó
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Button className="w-full bg-cyan-800 hover:bg-cyan-700 text-white font-semibold shadow" onClick={() => navigator(-1)}>Quay lại</Button>
+        </CardContent>
+      </Card>
+    </div>
+  )
+}
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setIsLoading(true)
       console.log('Submitting OTP:', values)
-      const response = await login(values)
+      let response = null
+      if (type === 'login') {
+         response = await login(values)
+      }else{
+         response = await register(values)
+      }
       if (response.data.code === 200) {
         console.log('Login successful:', response.data)
+        localStorage.setItem('token', response.data.result.token)
         navigator('/')
       }
-      console.log(values)
     } catch (error) {
       console.error('Form submission error', error)
     } finally {
@@ -70,7 +96,7 @@ export default function Otp() {
             Xác thực
           </CardTitle>
           <CardDescription>
-            Nhập mã xác thực đã gửi đến email: <strong>{email}</strong>
+            Nhập mã xác thực đã gửi đến email: <strong>{location.state?.email}</strong>
           </CardDescription>
         </CardHeader>
         <CardContent>

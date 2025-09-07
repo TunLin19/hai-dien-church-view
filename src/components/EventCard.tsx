@@ -1,4 +1,5 @@
 import type { Event } from "@/pages/Events";
+import { Button } from "./ui/button";
 
 function EventCard({ event }: { event: Event }) {
   return (
@@ -31,7 +32,14 @@ function EventCard({ event }: { event: Event }) {
           </p>
         </div>
 
-        <p className="mt-4 text-gray-600">{event.description}</p>
+        <p className="mt-2 text-gray-600">{event.description}</p>
+      </div>
+      <div className="px-4">
+        {event.eventType == "CLASS" ?(
+          <Button className="pt-2 w-full bg-cyan-800 hover:bg-cyan-900 text-white">
+            Đăng ký
+          </Button>
+        ):null}
       </div>
     </div>
   );

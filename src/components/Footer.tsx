@@ -60,7 +60,7 @@ function Footer() {
           </div>
 
           {/* Mass Schedule */}
-          <div>
+          <div className="col-span-2 md:col-span-1">
             <h3 className="text-xl font-bold mb-4">Giờ lễ</h3>
             <div className=" grid grid-cols-2 space-y-2">
               <div>
