@@ -1,11 +1,16 @@
-const AdminLayout = ({ children }: { children: React.ReactNode }) => {
+import { AppSidebar } from "@/components/AppSidebar"
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+
+
+
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div>
-      
-      <main>{children}</main>
-      
-    </div>
+    <SidebarProvider>
+      <AppSidebar />
+      <main>
+        <SidebarTrigger />
+        {children}
+      </main>
+    </SidebarProvider>
   )
 }
-
-export default AdminLayout

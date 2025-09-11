@@ -88,7 +88,7 @@ function Header() {
                   </Avatar>
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuContent align="center" className="w-56 mt-4 mr-2 md:mr-4 bg-cyan-800 text-white border border-cyan-700 shadow-lg">
                 <DropdownMenuLabel>
                   <div className="flex flex-col">
                     <span className="font-semibold">{user.fullName}</span>
@@ -99,6 +99,12 @@ function Header() {
                 <DropdownMenuItem>
                   <Link to="/taikhoan/thong-tin-ca-nhan">
                     Thông tin cá nhân
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <Link to="/taikhoan/bai-viet-cua-toi">
+                    Bài viết của tôi
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />

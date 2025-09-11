@@ -145,7 +145,7 @@ const ChatInterface: React.FC = () => {
           <Dialog.Overlay className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50" />
           <Dialog.Content
             className="fixed bottom-0 right-0 md:inset-0 md:mx-auto md:my-auto 
-               w-2/3 md:max-w-3xl h-[70vh] 
+               w-2/3 md:max-w-3xl h-[55vh] md:h-[70vh] 
                bg-white rounded-2xl 
                flex flex-col shadow-2xl mb-2 z-50"
           >

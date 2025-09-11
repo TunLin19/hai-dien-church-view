@@ -89,7 +89,7 @@ function Footer() {
             </p>
             <a
               href="https://www.facebook.com/linh.tuan.35380399/"
-              className="absolute right-0 logo"
+              className="absolute left-0 logo"
             >
            <img className="w-8 h-8 border-2 border-white rounded-full" src={logo} alt="" />
             </a>
